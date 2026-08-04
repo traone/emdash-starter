@@ -72,6 +72,36 @@ pnpm deploy
 
 This runs `astro build && wrangler deploy`. Alternatively, click the deploy button above to provision resources and deploy in one step via the Cloudflare dashboard.
 
+Before your first deploy, push the runtime encryption secret to the Worker (the value already sitting in your local `.env` as `EMDASH_ENCRYPTION_KEY` -- generate a new one instead if this is a real production site):
+
+```bash
+wrangler secret put EMDASH_ENCRYPTION_KEY
+```
+
+## CI/CD (Optional)
+
+This repo ships with two *inactive* example workflows in `.github/workflows/` (the `.yml.example` suffix keeps GitHub Actions from picking them up):
+
+- **`ci.yml.example`** -- installs deps, runs `pnpm typecheck` and `pnpm build` on every push and pull request. Needs no secrets.
+- **`deploy.yml.example`** -- runs `pnpm build && wrangler deploy` on every push to `main`. Needs the two repo secrets below.
+
+To enable either one:
+
+```bash
+cp .github/workflows/ci.yml.example .github/workflows/ci.yml
+cp .github/workflows/deploy.yml.example .github/workflows/deploy.yml
+git add .github/workflows/*.yml && git commit -m "Enable CI/CD"
+```
+
+For `deploy.yml`, add these under the repo's **Settings → Secrets and variables → Actions**:
+
+| Secret | How to get it |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare dashboard → My Profile → API Tokens → Create Token, using the "Edit Cloudflare Workers" template (needs Workers Scripts, D1, and R2 edit permissions for this project's account/zone). |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare dashboard → Workers & Pages → Overview (right sidebar), or `wrangler whoami`. |
+
+These CI secrets only authenticate the *deploy* -- they're separate from the `EMDASH_ENCRYPTION_KEY` runtime secret above, which is set once directly on the Worker via `wrangler secret put` and isn't touched by CI.
+
 ## See Also
 
 - [EmDash repository](https://github.com/emdash-cms/emdash)
