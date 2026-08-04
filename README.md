@@ -1,6 +1,6 @@
 # EmDash Starter Template (Cloudflare)
 
-A general-purpose starting point for building sites with [EmDash](https://github.com/emdash-cms/emdash) on Cloudflare Workers. Includes posts, pages, categories, and tags with minimal styling -- designed as a base you can build on rather than a finished theme.
+A general-purpose starting point for building sites with [EmDash](https://github.com/emdash-cms/emdash) on Cloudflare Workers. Includes posts, pages, categories, and tags, styled with **tinywind** -- a super minimal Tailwind CSS theme -- designed as a base you can build on rather than a finished design.
 
 This repo is meant to be **forked or copied per project**: clone/duplicate it for each new site, rename it (see below), provision its own Cloudflare resources, and deploy.
 
@@ -24,7 +24,18 @@ Before provisioning Cloudflare resources for a new project built from this start
 - Static pages via slug routing
 - Seed data with demo content
 - D1 database and R2 storage pre-configured
-- Dark/light mode support
+- **tinywind** theme -- Tailwind CSS, dark/light mode support
+
+## Theme: tinywind
+
+The whole theme lives in [`src/styles/tinywind.css`](src/styles/tinywind.css) (a single `@import "tailwindcss"` plus a couple of base rules) -- everything else is Tailwind utility classes on the components in `src/layouts/` and `src/pages/`. There's no design-token layer, component library, or build step beyond Tailwind itself:
+
+- One column, `max-w-2xl`, generous whitespace, system font stack -- no custom fonts to load.
+- Grayscale (Tailwind's `neutral` palette) with no accent color.
+- Dark mode follows the OS-level `prefers-color-scheme` automatically via Tailwind's `dark:` variant -- no toggle/JS required.
+- Rich text (`PortableText` output) is wrapped in `prose dark:prose-invert` from `@tailwindcss/typography` for readable defaults; everything else uses plain utility classes.
+
+To restyle: edit classes directly in the `.astro` files, or extend the design tokens with an `@theme` block in `tinywind.css` (see the [Tailwind v4 docs](https://tailwindcss.com/docs/theme)). `src/components/PostCard.astro` is the one shared component -- it's reused by the homepage, `/posts`, category, and tag archives, so styling changes there apply everywhere post listings appear.
 
 ## Pages
 

@@ -1,0 +1,13 @@
+/*
+ * tinywind -- a super minimal theme for EmDash starters, built on Tailwind.
+ * Monochrome, underlined links, one column, no custom fonts or components:
+ * the point is to stay out of the way of the content.
+ */
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@layer base {
+	body {
+		@apply bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100;
+	}
+}

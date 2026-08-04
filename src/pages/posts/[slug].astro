@@ -43,16 +43,18 @@ const categories = post.data.terms?.category ?? [];
 		{
 			post.data.featured_image && (
 				<div {...post.edit.featured_image}>
-					<Image image={post.data.featured_image} />
+					<Image image={post.data.featured_image} class="mb-6 w-full rounded-sm object-cover" />
 				</div>
 			)
 		}
 
-		<h1 {...post.edit.title}>{post.data.title}</h1>
+		<h1 {...post.edit.title} class="text-3xl font-semibold tracking-tight">
+			{post.data.title}
+		</h1>
 
 		{
 			post.data.publishedAt && (
-				<time datetime={post.data.publishedAt.toISOString()}>
+				<time datetime={post.data.publishedAt.toISOString()} class="mt-2 block text-sm text-neutral-500">
 					{post.data.publishedAt.toLocaleDateString("en-US", {
 						year: "numeric",
 						month: "long",
@@ -64,28 +66,34 @@ const categories = post.data.terms?.category ?? [];
 
 		{
 			categories.length > 0 && (
-				<div>
+				<div class="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-sm">
 					{categories.map((c) => (
-						<a href={`/category/${c.slug}`}>{c.label}</a>
+						<a href={`/category/${c.slug}`} class="text-neutral-600 dark:text-neutral-400">
+							{c.label}
+						</a>
 					))}
 				</div>
 			)
 		}
 
-		<PortableText value={post.data.content} />
+		<div class="prose prose-neutral mt-8 max-w-none dark:prose-invert">
+			<PortableText value={post.data.content} />
+		</div>
 
 		{
 			tags.length > 0 && (
-				<div>
+				<div class="mt-8 flex flex-wrap gap-x-3 gap-y-1 border-t border-neutral-200 pt-6 text-sm text-neutral-500 dark:border-neutral-800">
 					{tags.map((t) => (
-						<a href={`/tag/${t.slug}`}>{t.label}</a>
+						<a href={`/tag/${t.slug}`} class="hover:text-neutral-900 dark:hover:text-neutral-100">
+							#{t.label}
+						</a>
 					))}
 				</div>
 			)
 		}
 	</article>
 
-	<aside>
+	<aside class="mt-10 border-t border-neutral-200 pt-6 dark:border-neutral-800">
 		<WidgetArea name="sidebar" />
 	</aside>
 </Base>

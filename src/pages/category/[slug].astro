@@ -1,7 +1,7 @@
 ---
 import { getTerm, getEmDashCollection, decodeSlug } from "emdash";
-import { Image } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
+import PostCard from "../../components/PostCard.astro";
 
 const slug = decodeSlug(Astro.params.slug);
 const term = slug ? await getTerm("category", slug) : null;
@@ -17,24 +17,18 @@ const { entries: posts } = await getEmDashCollection("posts", {
 ---
 
 <Base title={`${term.label} posts`} description={`Posts in ${term.label}`}>
-	<h1>{term.label}</h1>
-	<p>{posts.length} {posts.length === 1 ? "post" : "posts"}</p>
+	<h1 class="text-2xl font-semibold tracking-tight">{term.label}</h1>
+	<p class="mt-1 text-sm text-neutral-500">
+		{posts.length} {posts.length === 1 ? "post" : "posts"}
+	</p>
 
 	{
 		posts.length === 0 ? (
-			<p>No posts in this category yet.</p>
+			<p class="mt-6 text-neutral-600 dark:text-neutral-400">No posts in this category yet.</p>
 		) : (
-			<ul>
+			<ul class="mt-6">
 				{posts.map((post) => (
-					<li>
-						<a href={`/posts/${post.id}`}>
-							{post.data.featured_image && (
-								<Image image={post.data.featured_image} />
-							)}
-							<h2>{post.data.title}</h2>
-						</a>
-						{post.data.excerpt && <p>{post.data.excerpt}</p>}
-					</li>
+					<PostCard post={post} />
 				))}
 			</ul>
 		)

@@ -1,0 +1,60 @@
+---
+import { Image } from "emdash/ui";
+
+interface Props {
+	post: {
+		id: string;
+		data: {
+			title: string;
+			excerpt?: string | null;
+			featured_image?: { id: string; src?: string; alt?: string } | null;
+			publishedAt?: Date | null;
+		};
+	};
+	tags?: { slug: string; label: string }[];
+}
+
+const { post, tags = [] } = Astro.props;
+---
+
+<li class="border-b border-neutral-200 py-6 first:pt-0 last:border-b-0 dark:border-neutral-800">
+	<a href={`/posts/${post.id}`} class="group block no-underline">
+		{
+			post.data.featured_image && (
+				<Image
+					image={post.data.featured_image}
+					class="mb-3 aspect-video w-full rounded-sm object-cover"
+				/>
+			)
+		}
+		<h2 class="text-lg font-medium text-neutral-900 group-hover:underline dark:text-neutral-100">
+			{post.data.title}
+		</h2>
+	</a>
+	{
+		post.data.publishedAt && (
+			<time
+				datetime={post.data.publishedAt.toISOString()}
+				class="mt-1 block text-sm text-neutral-500"
+			>
+				{post.data.publishedAt.toLocaleDateString("en-US", {
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+				})}
+			</time>
+		)
+	}
+	{post.data.excerpt && <p class="mt-1 text-neutral-600 dark:text-neutral-400">{post.data.excerpt}</p>}
+	{
+		tags.length > 0 && (
+			<div class="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-neutral-500">
+				{tags.map((t) => (
+					<a href={`/tag/${t.slug}`} class="hover:text-neutral-900 dark:hover:text-neutral-100">
+						#{t.label}
+					</a>
+				))}
+			</div>
+		)
+	}
+</li>

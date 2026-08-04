@@ -34,8 +34,12 @@ const seo = getSeoMeta(page, {
 	content={{ collection: "pages", id: page.data.id, slug }}
 >
 	<article>
-		<h1 {...page.edit.title}>{page.data.title}</h1>
+		<h1 {...page.edit.title} class="text-3xl font-semibold tracking-tight">
+			{page.data.title}
+		</h1>
 
-		<PortableText value={page.data.content} />
+		<div class="prose prose-neutral mt-8 max-w-none dark:prose-invert">
+			<PortableText value={page.data.content} />
+		</div>
 	</article>
 </Base>
