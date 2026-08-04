@@ -37,6 +37,8 @@ The whole theme lives in [`src/styles/tinywind.css`](src/styles/tinywind.css) (a
 
 To restyle: edit classes directly in the `.astro` files, or extend the design tokens with an `@theme` block in `tinywind.css` (see the [Tailwind v4 docs](https://tailwindcss.com/docs/theme)). `src/components/PostCard.astro` is the one shared component -- it's reused by the homepage, `/posts`, category, and tag archives, so styling changes there apply everywhere post listings appear.
 
+For worked examples -- adding an accent color, widening the layout, loading a custom font, switching dark mode to a manual toggle, adding another Tailwind plugin, extending `PostCard` -- see **[docs/theming.md](docs/theming.md)**.
+
 ## Pages
 
 | Page | Route |
