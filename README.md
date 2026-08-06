@@ -60,12 +60,31 @@ For worked examples -- adding an accent color, widening the layout, loading a cu
 
 ## Local Development
 
-```bash
-pnpm install
-pnpm dev
-```
+1. **Install dependencies** (first time only):
 
-`pnpm dev` applies the schema/settings from `seed/seed.json` to a local D1 emulation automatically -- no separate init step needed. The admin UI is at `http://localhost:4321/_emdash/admin`.
+   ```bash
+   pnpm install
+   ```
+
+2. **Start the dev server:**
+
+   ```bash
+   pnpm dev
+   ```
+
+   This applies the schema/settings from `seed/seed.json` to a local D1 emulation and regenerates TypeScript types (`emdash-env.d.ts`) automatically -- no separate init step needed.
+
+3. **Open the site:** `http://localhost:4321`
+
+4. **Open the admin UI:** `http://localhost:4321/_emdash/admin` -- manage content, schema, and media here.
+
+5. **Edit content/schema:** change `seed/seed.json` for collections/fields/taxonomies, or use the admin UI directly.
+
+6. **Regenerate types** if schema changes outside of a dev server restart:
+
+   ```bash
+   pnpm exec emdash types
+   ```
 
 ## Provisioning Cloudflare Resources
 
